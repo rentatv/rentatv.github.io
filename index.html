@@ -13,19 +13,20 @@
 
     <div id="clockContainer">
       <div id="clock">00:00:00</div>
-      <button id="startBtn">Start watching live</button>
+      <button id="startBtn">Zacznij oglądać na żywo</button>
     </div>
 
     <div id="playerContainer">
-      <video id="myVideo" width="640" height="360" autoplay></video>
+      <video id="myVideo"></video>
       <img
         id="breakImage"
-        src="przerwa.png"
-        style="display: none; width: 640px; height: 360px"
+        src="images/przerwa.png"
+        alt="Przerwa"
+        style="display: none"
       />
       <div id="controls">
-        <label>
-          Głośność:
+        <label
+          >Głośność:
           <input
             type="range"
             id="volumeSlider"
@@ -36,8 +37,19 @@
           />
         </label>
         <button id="fullscreenBtn">Fullscreen</button>
-        <button id="exitFullscreenBtn">❌ Exit Fullscreen</button>
       </div>
+      <button
+        id="exitFullscreenBtn"
+        style="
+          display: none;
+          position: absolute;
+          top: 10px;
+          right: 10px;
+          z-index: 20;
+        "
+      >
+        ❌ Exit Fullscreen
+      </button>
     </div>
 
     <div id="extraButtons">
