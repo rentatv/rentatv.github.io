@@ -25,44 +25,40 @@ function updateClock() {
   setTimeout(updateClock, 1000);
 }
 
-// Pobierz następny element harmonogramu w kolejności
-function getNextItem() {
-  if (!currentFile) return schedule[0];
-  const idx = schedule.findIndex((s) => s.file === currentFile);
-  return schedule[(idx + 1) % schedule.length];
-}
-
-// Odtwarzanie pseudo-live wg harmonogramu z przerwą
+// Odtwarzanie pseudo-live wg harmonogramu
 function playCurrent() {
   const now = new Date();
-  const hours = now.getHours();
+  const secondsNow =
+    now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
 
   // przerwa 20:00 - 06:00
-  if (hours >= 20 || hours < 6) {
+  if (now.getHours() >= 20 || now.getHours() < 6) {
     player.style.display = "none";
     breakImage.style.display = "block";
-    setTimeout(playCurrent, 1000); // sprawdzaj co sekundę, kiedy wznowić
-    return;
+  } else {
+    breakImage.style.display = "none";
+    player.style.display = "block";
+
+    // wybierz plik, który aktualnie powinien grać
+    const currentItem = schedule.find(
+      (item) =>
+        secondsNow >= item.start && secondsNow < item.start + item.duration
+    );
+
+    if (currentItem && currentFile !== currentItem.file) {
+      currentFile = currentItem.file;
+      player.src = "videos/" + currentFile;
+      player.play().catch((err) => console.error(err));
+      console.log(
+        "Odtwarzanie pliku:",
+        currentFile,
+        "Sekundy od północy:",
+        secondsNow
+      );
+    }
   }
 
-  breakImage.style.display = "none";
-  player.style.display = "block";
-
-  const next = getNextItem();
-  if (!next) return;
-
-  currentFile = next.file;
-  player.src = "videos/" + currentFile;
-  player.play().catch((err) => console.error("Błąd odtwarzania wideo:", err));
-  console.log(
-    "Odtwarzanie pliku:",
-    currentFile,
-    "Sekundy od północy:",
-    next.start
-  );
-
-  let duration = (next.duration || 10) * 1000;
-  setTimeout(playCurrent, duration);
+  setTimeout(playCurrent, 500); // sprawdzaj co 0.5s
 }
 
 // Start systemu po kliknięciu przycisku
