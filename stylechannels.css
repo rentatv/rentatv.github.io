@@ -1,0 +1,76 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "JetBrains Mono", monospace;
+  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+/* Nagłówek */
+#topHeader {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#topBar {
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+  padding: 10px 0;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+#channelName {
+  font-size: 2em;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  margin-top: 5px;
+}
+
+/* Siatka kanałów */
+#channelsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  width: 90%;
+  max-width: 1000px;
+}
+
+.channelCard {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.channelCard:hover {
+  transform: scale(1.05);
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.channelCard img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.channelCard span {
+  text-align: center;
+  font-size: 1em;
+  font-weight: bold;
+}
