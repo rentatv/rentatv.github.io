@@ -23,8 +23,30 @@
       letter-spacing: 1px;
     }
 
-    input, button {
-      display: none; /* Domyślnie ukryte, jeśli czas nie pozwala */
+    input {
+      padding: 10px;
+      font-size: 1em;
+      border: none;
+      border-radius: 6px;
+      width: 250px;
+      text-align: center;
+      outline: none;
+      margin-bottom: 15px;
+    }
+
+    button {
+      background: #e50914;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 10px 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #b20710;
     }
 
     #message {
@@ -75,9 +97,16 @@
       title.textContent = "Strona dostępna dopiero po 14:00";
       msg.textContent = "Spróbuj ponownie później.";
       msg.style.color = "#e50914";
+
+      // Ukrywamy pole i przycisk TYLKO w JS, CSS zostaje nietknięty
+      input.style.display = "none";
+      btn.style.display = "none";
+
     } else {
-      input.style.display = "block";
-      btn.style.display = "block";
+
+      // Po 14:00 zostawiamy ich naturalne style
+      input.style.display = "";
+      btn.style.display = "";
 
       btn.addEventListener("click", () => {
         const code = input.value.trim().toLowerCase();
