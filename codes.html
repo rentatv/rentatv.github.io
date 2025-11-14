@@ -23,30 +23,8 @@
       letter-spacing: 1px;
     }
 
-    input {
-      padding: 10px;
-      font-size: 1em;
-      border: none;
-      border-radius: 6px;
-      width: 250px;
-      text-align: center;
-      outline: none;
-      margin-bottom: 15px;
-    }
-
-    button {
-      background: #e50914;
-      color: white;
-      border: none;
-      border-radius: 6px;
-      padding: 10px 25px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    button:hover {
-      background: #b20710;
+    input, button {
+      display: none; /* Domyślnie ukryte, jeśli czas nie pozwala */
     }
 
     #message {
@@ -72,9 +50,11 @@
 </head>
 <body>
   <div id="topBar">RentaTV</div>
-  <h1>Wpisz kod dostępu</h1>
+  <h1 id="title">Wpisz kod dostępu</h1>
+
   <input type="text" id="codeInput" placeholder="Wpisz kod..." />
   <button id="checkBtn">Zatwierdź</button>
+
   <div id="message"></div>
 
   <script>
@@ -85,25 +65,39 @@
     const input = document.getElementById("codeInput");
     const btn = document.getElementById("checkBtn");
     const msg = document.getElementById("message");
+    const title = document.getElementById("title");
 
-    btn.addEventListener("click", () => {
-      const code = input.value.trim().toLowerCase();
+    // BLOKADA PRZED 14:00
+    const now = new Date();
+    const hour = now.getHours();
 
-      if (codes[code]) {
-        msg.textContent = "Kod prawidłowy! Przekierowuję...";
-        msg.style.color = "#4caf50";
-        setTimeout(() => {
-          window.location.href = codes[code];
-        }, 1000);
-      } else {
-        msg.textContent = "Nieprawidłowy kod.";
-        msg.style.color = "#e50914";
-      }
-    });
+    if (hour < 14) {
+      title.textContent = "Strona dostępna dopiero po 14:00";
+      msg.textContent = "Spróbuj ponownie później.";
+      msg.style.color = "#e50914";
+    } else {
+      input.style.display = "block";
+      btn.style.display = "block";
 
-    input.addEventListener("keydown", (e) => {
-      if (e.key === "Enter") btn.click();
-    });
+      btn.addEventListener("click", () => {
+        const code = input.value.trim().toLowerCase();
+
+        if (codes[code]) {
+          msg.textContent = "Kod prawidłowy! Przekierowuję...";
+          msg.style.color = "#4caf50";
+          setTimeout(() => {
+            window.location.href = codes[code];
+          }, 1000);
+        } else {
+          msg.textContent = "Nieprawidłowy kod.";
+          msg.style.color = "#e50914";
+        }
+      });
+
+      input.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") btn.click();
+      });
+    }
   </script>
 </body>
 </html>
