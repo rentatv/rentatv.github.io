@@ -42,7 +42,7 @@ function playCurrent() {
   const secondsNow =
     now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds();
 
-  if (isBreakHour(now)) {
+  if (1 == 2) {
     player.style.display = "none";
     breakImage.style.display = "block";
     player.pause();
@@ -141,3 +141,4 @@ setInterval(() => {
     now.getHours() * 3600 + now.getMinutes() * 60 + now.getSeconds()
   );
 }, 1000);
+
